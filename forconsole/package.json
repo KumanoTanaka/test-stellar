@@ -1,0 +1,14 @@
+{
+  "name": "forconsole",
+  "version": "1.0.0",
+  "description": "this is a simple node project where we use only node cmd to talk with horizon stellar network.",
+  "scripts": {
+    "start": "node"
+  },
+  "author": "kumanote,LLC.",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.81.0",
+    "stellar-sdk": "^0.7.3"
+  }
+}

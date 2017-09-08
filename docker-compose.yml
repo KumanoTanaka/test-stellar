@@ -1,0 +1,25 @@
+version: "2"
+services:
+  bridge:
+    build: ./bridge-server
+    ports:
+      - "8001:8001"
+    command: ./wait-for-it.sh mysql:3306 -t 600 -s -- ./bridge
+    depends_on:
+      - mysql
+    container_name: bridge
+  mysql:
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: stellar_bridge
+      MYSQL_DATABASE: stellar_bridge
+      MYSQL_USER: stellar_bridge
+      MYSQL_PASSWORD: stellar_bridge
+      TZ: JST
+    volumes:
+      - ./mysql/conf.d:/etc/mysql/conf.d
+      - mysql-data:/var/lib/mysql
+    container_name: mysql
+volumes:
+  mysql-data:
+    driver: local

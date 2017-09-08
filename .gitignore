@@ -1,0 +1,5 @@
+.DS_Store
+
+# eclipse settings for golang ide
+.metadata/
+RemoteSystemsTempFiles/
