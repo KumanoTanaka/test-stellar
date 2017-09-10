@@ -4,22 +4,45 @@ services:
     build: ./bridge-server
     ports:
       - "8001:8001"
-    command: ./wait-for-it.sh mysql:3306 -t 600 -s -- ./bridge
+    command: ./wait-for-it.sh bridge-db:3306 -t 600 -s -- ./bridge
     depends_on:
-      - mysql
+      - bridge-db
     container_name: bridge
-  mysql:
+  bridge-db:
     image: mysql:5.6
     environment:
-      MYSQL_ROOT_PASSWORD: stellar_bridge
-      MYSQL_DATABASE: stellar_bridge
-      MYSQL_USER: stellar_bridge
-      MYSQL_PASSWORD: stellar_bridge
+      MYSQL_ROOT_PASSWORD: bridge
+      MYSQL_DATABASE: bridge
+      MYSQL_USER: bridge
+      MYSQL_PASSWORD: bridge
       TZ: JST
     volumes:
-      - ./mysql/conf.d:/etc/mysql/conf.d
-      - mysql-data:/var/lib/mysql
-    container_name: mysql
+      - ./bridge-db/conf.d:/etc/mysql/conf.d
+      - bridge-db-data:/var/lib/mysql
+    container_name: bridge-db
+  federation-kumano-te.com:
+    build: ./federation-server
+    ports:
+      - "8002:8002"
+    command: ./wait-for-it.sh federation-db:3306 -t 600 -s -- ./federation
+    depends_on:
+      - federation-db
+    container_name: federation-kumano-te.com
+  federation-db:
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: federation
+      MYSQL_DATABASE: federation
+      MYSQL_USER: federation
+      MYSQL_PASSWORD: federation
+      TZ: JST
+    volumes:
+      - ./federation-db/init.d:/docker-entrypoint-initdb.d
+      - ./federation-db/conf.d:/etc/mysql/conf.d
+      - federation-db-data:/var/lib/mysql
+    container_name: federation-db
 volumes:
-  mysql-data:
+  bridge-db-data:
+    driver: local
+  federation-db-data:
     driver: local
