@@ -1,0 +1,15 @@
+{
+  "name": "callbacks",
+  "version": "1.0.0",
+  "description": "this is the nodejs callback from bridge/compliance handler server.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "kumanote,LLC.",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.0",
+    "express": "^4.15.4"
+  }
+}

@@ -41,8 +41,31 @@ services:
       - ./federation-db/conf.d:/etc/mysql/conf.d
       - federation-db-data:/var/lib/mysql
     container_name: federation-db
+  compliance-kumano-te.com:
+    build: ./compliance-server
+    ports:
+      - "8003:8003"
+      - "8004:8004"
+    command: ./wait-for-it.sh compliance-db:3306 -t 600 -s -- ./compliance
+    depends_on:
+      - compliance-db
+    container_name: compliance-kumano-te.com
+  compliance-db:
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: compliance
+      MYSQL_DATABASE: compliance
+      MYSQL_USER: compliance
+      MYSQL_PASSWORD: compliance
+      TZ: JST
+    volumes:
+      - ./compliance-db/conf.d:/etc/mysql/conf.d
+      - compliance-db-data:/var/lib/mysql
+    container_name: compliance-db
 volumes:
   bridge-db-data:
     driver: local
   federation-db-data:
+    driver: local
+  compliance-db-data:
     driver: local

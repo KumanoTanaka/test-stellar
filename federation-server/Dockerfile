@@ -1,7 +1,7 @@
 FROM golang:1.8-alpine
 MAINTAINER kumanote,LLC.
 
-ENV DIST_DIR /usr/local/bin/bridge-server
+ENV DIST_DIR /usr/local/bin/federation-server
 
 RUN apk add --update --no-cache git g++ openssh-client bash
 RUN go get -u github.com/stellar/go/services/federation
