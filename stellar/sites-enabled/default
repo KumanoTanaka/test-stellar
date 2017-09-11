@@ -1,0 +1,14 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+
+    location ^~ /.well-known/ {
+        add_header Access-Control-Allow-Origin *;
+        root /var/www/stellar-kumano-te.com;
+    }
+}

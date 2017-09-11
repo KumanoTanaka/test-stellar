@@ -17,9 +17,9 @@ signing_seed = "SB5PJSVV3K62V3MSQGG6DKMNHR4BONGAEK5TTSMFPQCQZJE6RVHXWETN"
 encryption_key = "SB5PJSVV3K62V3MSQGG6DKMNHR4BONGAEK5TTSMFPQCQZJE6RVHXWETN"
 
 [callbacks]
-sanctions = "http://localhost:8005/compliance/sanctions"
-ask_user = "http://localhost:8005/compliance/ask_user"
-fetch_info = "http://localhost:8005/compliance/fetch_info"
+sanctions = "http://callbacks-kumano-te.com:8005/compliance/sanctions"
+ask_user = "http://callbacks-kumano-te.com:8005/compliance/ask_user"
+fetch_info = "http://callbacks-kumano-te.com:8005/compliance/fetch_info"
 
 # The compliance server must be available via HTTPS. Specify your SSL
 # certificate and key here. If the server is behind a proxy or load  balancer
