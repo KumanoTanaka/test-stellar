@@ -1,0 +1,3 @@
+FEDERATION_SERVER = "https://federation-kumano-te.com:8002/federation"
+AUTH_SERVER = "https://compliance-kumano-te.com:8003"
+SIGNING_KEY = "GATLCZMS3ITTVSCM2VB55KT2I7OHHXOWD2QM6O4BNK5LQTD2A3T7DINC"

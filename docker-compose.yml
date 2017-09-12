@@ -1,13 +1,23 @@
 version: "2"
 services:
-  bridge:
+  stellar-kumano-te.com:
+    build: ./stellar
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./stellar/keys:/etc/nginx/keys"
+      - "./stellar/sites-enabled:/etc/nginx/sites-enabled"
+      - "./stellar/.well-known:/var/www/stellar-kumano-te.com/.well-known"
+    container_name: stellar-kumano-te.com
+  bridge-kumano-te.com:
     build: ./bridge-server
     ports:
       - "8001:8001"
     command: ./wait-for-it.sh bridge-db:3306 -t 600 -s -- ./bridge
     depends_on:
       - bridge-db
-    container_name: bridge
+    container_name: bridge-kumano-te.com
   bridge-db:
     image: mysql:5.6
     environment:
@@ -41,8 +51,41 @@ services:
       - ./federation-db/conf.d:/etc/mysql/conf.d
       - federation-db-data:/var/lib/mysql
     container_name: federation-db
+  compliance-kumano-te.com:
+    build: ./compliance-server
+    ports:
+      - "8003:8003"
+      - "8004:8004"
+    command: ./wait-for-it.sh compliance-db:3306 -t 600 -s -- ./compliance
+    depends_on:
+      - compliance-db
+    container_name: compliance-kumano-te.com
+  compliance-db:
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: compliance
+      MYSQL_DATABASE: compliance
+      MYSQL_USER: compliance
+      MYSQL_PASSWORD: compliance
+      TZ: JST
+    volumes:
+      - ./compliance-db/conf.d:/etc/mysql/conf.d
+      - compliance-db-data:/var/lib/mysql
+    container_name: compliance-db
+  callbacks-kumano-te.com:
+    build: ./callbacks
+    ports:
+      - "8005:8005"
+    command: npm start
+    depends_on:
+      - bridge-db
+      - federation-db
+      - compliance-db
+    container_name: callbacks-kumano-te.com
 volumes:
   bridge-db-data:
     driver: local
   federation-db-data:
+    driver: local
+  compliance-db-data:
     driver: local
