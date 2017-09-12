@@ -6,7 +6,7 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/receive', function (request, response) {
+app.post('/receive', function (request, response) {
   var payment = request.body;
   console.log('/receive');
   console.log(payment);

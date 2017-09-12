@@ -11,7 +11,7 @@ RUN mkdir -p ${DIST_DIR}
 
 WORKDIR ${SRC_DIR}
 
-RUN git clone https://github.com/stellar/bridge-server.git
+RUN git clone https://github.com/KumanoTanaka/bridge-server.git
 RUN cd bridge-server && \
   go get github.com/constabulary/gb/... && \
   gb build && \
